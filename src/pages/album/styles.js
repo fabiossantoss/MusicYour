@@ -6,6 +6,29 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primary,
   },
+  thumbnail: {
+    width: '100%',
+    height: 120,
+    borderWidth: 1,
+    borderBottomColor: colors.darkTransparent,
+  },
+  thumbnailContainer: {
+    flex: 1,
+    backgroundColor: colors.darkTransparent,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    color: colors.white,
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  author: {
+    fontSize: 18,
+    color: colors.whiteTransparent,
+    marginTop: metrics.baseMargin,
+  },
 });
+
 
 export default styles;

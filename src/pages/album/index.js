@@ -1,13 +1,41 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import {
+  View,
+  StatusBar,
+  ImageBackground,
+  Text,
+  FlatList
+} from 'react-native';
+
+import SongItem from 'components/SongItem';
+
 import { colors } from 'styles';
 import styles from './styles';
 
-const Album = () => (
-  <View style={styles.container}>
-    <StatusBar backgroundColor={colors.secundary} />
-  </View>
-);
+const Album = ({ navigation }) => {
+  const { album } = navigation.state.params;
+
+  return (
+    <View style={styles.container}>
+      <StatusBar backgroundColor={colors.secundary} />
+      <ImageBackground
+        style={styles.thumbnail}
+        source={{ uri: album.thumbnail }}
+        blurRadius={1}
+      >
+        <View style={styles.thumbnailContainer}>
+          <Text style={styles.title}>{album.title}</Text>
+          <Text style={styles.author}>{album.author}</Text>
+        </View>
+      </ImageBackground>
+      <FlatList
+        data={album.songs}
+        keyExtractor={item => String(item.id)}
+        renderItem={({ item }) => <SongItem song={item} />}
+      />
+    </View>
+  );
+};
 
 Album.navigationOptions = ({ navigation }) => ({
   title: navigation.state.params.album.title,
