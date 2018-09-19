@@ -4,7 +4,7 @@ import sagaPlugin from 'reactotron-redux-saga';
 
 
 const tron = Reactotron
-  .configure({ name: 'MusicYour', host: '192.168.0.108' })
+  .configure({ name: 'MusicYour', host: '192.168.102.2' })
   .useReactNative()
   .use(reactotronRedux())
   .use(sagaPlugin())
