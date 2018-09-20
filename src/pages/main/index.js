@@ -47,7 +47,7 @@ class Main extends Component {
       <View style={styles.container}>
         <StatusBar backgroundColor={colors.secundary} />
         <FlatList
-          data={this.props.albuns}
+          data={this.props.albums.data}
           keyExtractor={album => String(album.id)}
           renderItem={({ item }) => (
             <AlbumItem onPress={() => this.props.navigation.navigate('Album', { album: item })} album={item} />

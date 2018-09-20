@@ -2,9 +2,9 @@ import Immutable from 'seamless-immutable';
 
 // Types
 export const Types = {
-  GET_REQUEST: 'albums/GET_REQUEST',
-  GET_SUCCESS: 'albums/GET_SUCCESS',
-  GET_FAILURE: 'albums/GET_FAILURE',
+  REQUEST: 'search/REQUEST',
+  SUCCESS: 'search/SUCCESS',
+  FAILURE: 'search/FAILURE',
 };
 
 const INITIAL_STATE = Immutable({
@@ -14,7 +14,7 @@ const INITIAL_STATE = Immutable({
 });
 
 // reducers
-export default function albums(state = INITIAL_STATE, action) {
+export default function search(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.GET_REQUEST:
       return { ...state, loading: true };
@@ -29,19 +29,22 @@ export default function albums(state = INITIAL_STATE, action) {
 
 // creators => actions utilizadas pelo redux_saga para atualizar os reducers
 export const Creators = {
-  getAlbumsRequest: () => ({
-    type: Types.GET_REQUEST,
+  SearchRequest: param => ({
+    type: Types.REQUEST,
+    payload: {
+      param,
+    },
   }),
 
-  getAlbumsSuccess: data => ({
-    type: Types.GET_SUCCESS,
+  SearchSuccess: data => ({
+    type: Types.SUCCESS,
     payload: {
       data,
     },
   }),
 
-  getAlbumsFailure: error => ({
-    type: Types.GET_FAILURE,
+  SearchFailure: error => ({
+    type: Types.FAILURE,
     payload: {
       error,
     },
