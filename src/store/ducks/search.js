@@ -16,11 +16,11 @@ const INITIAL_STATE = Immutable({
 // reducers
 export default function search(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_REQUEST:
+    case Types.REQUEST:
       return { ...state, loading: true };
-    case Types.GET_SUCCESS:
+    case Types.SUCCESS:
       return { data: action.payload.data, loading: false };
-    case Types.GET_FAILURE:
+    case Types.FAILURE:
       return { ...state, loading: false, error: action.payload.error };
     default:
       return state;

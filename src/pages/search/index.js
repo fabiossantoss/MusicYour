@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import { debounce } from 'lodash';
+
 import {
   View,
   StatusBar,
   FlatList,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { brindActionCreators, bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux';
 import { Creators as SearchActions } from 'store/ducks/search';
 
 
@@ -22,8 +26,30 @@ class Search extends Component {
     title: 'buscar',
   }
 
+  static propTypes = {
+    SearchRequest: PropTypes.func.isRequired,
+    search: PropTypes.shape({
+      data: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+      })),
+      loading: PropTypes.bool,
+    }).isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.searchInput = debounce(this.props.SearchRequest, 800);
+  }
+
   state = {
     searchInput: '',
+  }
+
+  search = (searchInput) => {
+    this.setState({ searchInput });
+
+    this.searchInput(searchInput);
   }
 
   render() {
@@ -39,10 +65,15 @@ class Search extends Component {
             placeholderTextColor="#666"
             underlineColorAndroid="transparent"
             value={this.state.searchInput}
+            onChangeText={this.search}
           />
         </View>
+
+        {this.props.search.loading &&
+          <ActivityIndicator size="small" color="#999" style={styles.loading} />}
+
         <FlatList
-          data={songs}
+          data={this.props.search.data}
           keyExtractor={song => String(song.id)}
           renderItem={({ item }) => <SongItem song={item} />}
         />
