@@ -17,7 +17,8 @@ import { Creators as SearchActions } from 'store/ducks/search';
 
 import { colors } from 'styles';
 
-import SongItem from 'components/SongItem';
+import SongList from 'components/SongList';
+
 import styles from './styles';
 
 class Search extends Component {
@@ -72,11 +73,7 @@ class Search extends Component {
         {this.props.search.loading &&
           <ActivityIndicator size="small" color="#999" style={styles.loading} />}
 
-        <FlatList
-          data={this.props.search.data}
-          keyExtractor={song => String(song.id)}
-          renderItem={({ item }) => <SongItem song={item} />}
-        />
+        <SongList data={this.props.search.data} />
       </View>
     );
   }

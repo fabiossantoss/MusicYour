@@ -4,10 +4,9 @@ import {
   StatusBar,
   ImageBackground,
   Text,
-  FlatList
 } from 'react-native';
 
-import SongItem from 'components/SongItem';
+import SongList from 'components/SongList';
 
 import { colors } from 'styles';
 import styles from './styles';
@@ -28,10 +27,8 @@ const Album = ({ navigation }) => {
           <Text style={styles.author}>{album.author}</Text>
         </View>
       </ImageBackground>
-      <FlatList
+      <SongList
         data={album.songs}
-        keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => <SongItem song={item} />}
       />
     </View>
   );

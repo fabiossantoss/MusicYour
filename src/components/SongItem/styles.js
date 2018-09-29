@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
     color: colors.dark,
     marginTop: 3,
   },
+  active: {
+    color: colors.green,
+  },
   play: {
     color: colors.regular,
   },

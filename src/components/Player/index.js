@@ -5,32 +5,44 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as PlayerActions } from 'store/ducks/player';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 
-const currentSong = {
-  title: 'Papercut',
-  author: 'Linkin Park',
+const Player = ({ player, play, pause, next, previous }) => {
+  if (player.currentSong.id === undefined) return null;
+
+  const pressFunc = player.paused ? play : pause;
+  const icon = player.paused ? 'play-circle-filled' : 'pause-circle-filled';
+  return (
+    <View style={styles.container}>
+      <View style={styles.currentSong}>
+        <Text style={styles.title}>{player.currentSong.title}</Text>
+        <Text style={styles.author}>{player.currentSong.author}</Text>
+      </View>
+      <View style={styles.controls}>
+        <TouchableOpacity onPress={previous}>
+          <Icon name="skip-previous" size={24} style={styles.controlIcons} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.play} onPress={pressFunc}>
+          <Icon name={icon} size={36} style={styles.controlIcons} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={next}>
+          <Icon name="skip-next" size={24} style={styles.controlIcons} />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 };
 
-const Player = () => (
-  <View style={styles.container}>
-    <View style={styles.currentSong}>
-      <Text style={styles.title}>{currentSong.title}</Text>
-      <Text style={styles.author}>{currentSong.author}</Text>
-    </View>
-    <View style={styles.controls}>
-      <TouchableOpacity onPress={() => { }}>
-        <Icon name="skip-previous" size={24} style={styles.controlIcons} />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.play} onPress={() => { }}>
-        <Icon name="play-circle-filled" size={36} style={styles.controlIcons} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => { }}>
-        <Icon name="skip-next" size={24} style={styles.controlIcons} />
-      </TouchableOpacity>
-    </View>
-  </View>
-);
 
-export default Player;
+const mapStateToProps = state => ({
+  player: state.player,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(PlayerActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player);
